@@ -1,0 +1,417 @@
+basePath: /v1
+consumes:
+- application/json
+definitions:
+  dto.ClientDetailResponseDTO:
+    properties:
+      email:
+        type: string
+      favorites:
+        items:
+          $ref: '#/definitions/dto.ProductResponseDTO'
+        type: array
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  dto.ClientRequestDTO:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+    required:
+    - email
+    - name
+    type: object
+  dto.ClientResumeResponseDTO:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  dto.FavoriteRequestDTO:
+    properties:
+      clientId:
+        type: integer
+      productId:
+        type: integer
+    required:
+    - clientId
+    - productId
+    type: object
+  dto.LoginRequestDTO:
+    properties:
+      email:
+        type: string
+    required:
+    - email
+    type: object
+  dto.LoginResponseDTO:
+    properties:
+      token:
+        type: string
+    type: object
+  dto.ProductResponseDTO:
+    properties:
+      brand:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      price:
+        type: number
+      reviewScore:
+        type: number
+      title:
+        type: string
+    type: object
+  genericresponse.Error:
+    properties:
+      detail:
+        type: string
+      message:
+        type: string
+    type: object
+info:
+  contact:
+    email: rsp.assistencia@gmail.com
+    name: API Support
+    url: https://www.linkedin.com/in/rspandre/
+  description: Api to manage clients favorites products
+  title: Favorites Api
+  version: "1.0"
+paths:
+  /admin/clients:
+    get:
+      description: Endpoit to list clients
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ClientResumeResponseDTO'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/genericresponse.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: List Client
+      tags:
+      - Admin
+    post:
+      description: Endpoit to register client
+      parameters:
+      - description: Payload
+        in: body
+        name: Payload
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ClientRequestDTO'
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/genericresponse.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Client register
+      tags:
+      - Admin
+  /admin/clients/{clientID}:
+    get:
+      description: Endpoit client detail
+      parameters:
+      - description: Client id
+        example: 1
+        in: path
+        name: clientID
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ClientDetailResponseDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/genericresponse.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/genericresponse.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Client Detail
+      tags:
+      - Admin
+    put:
+      description: Endpoit client update
+      parameters:
+      - description: Client id
+        example: 1
+        in: path
+        name: clientID
+        required: true
+        type: integer
+      - description: Payload
+        in: body
+        name: Payload
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ClientRequestDTO'
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/genericresponse.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/genericresponse.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Client Update
+      tags:
+      - Admin
+  /clients:
+    post:
+      description: Endpoit to self register
+      parameters:
+      - description: Payload
+        in: body
+        name: Payload
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ClientRequestDTO'
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/genericresponse.Error'
+      summary: Client register
+      tags:
+      - Client
+  /clients/{clientID}:
+    delete:
+      description: Endpoit client delete
+      parameters:
+      - description: Client id
+        example: 1
+        in: path
+        name: clientID
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/genericresponse.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Client Delete
+      tags:
+      - Admin
+    get:
+      description: Endpoit client detail
+      parameters:
+      - description: Client id
+        example: 1
+        in: path
+        name: clientID
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ClientDetailResponseDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/genericresponse.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/genericresponse.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Client Detail
+      tags:
+      - Client
+    put:
+      description: Endpoit client update
+      parameters:
+      - description: Client id
+        example: 1
+        in: path
+        name: clientID
+        required: true
+        type: integer
+      - description: Payload
+        in: body
+        name: Payload
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ClientRequestDTO'
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/genericresponse.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/genericresponse.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Client Update
+      tags:
+      - Client
+  /favorites:
+    post:
+      description: Endpoit add favorite
+      parameters:
+      - description: Payload
+        in: body
+        name: Payload
+        required: true
+        schema:
+          $ref: '#/definitions/dto.FavoriteRequestDTO'
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/genericresponse.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Add Favorite
+      tags:
+      - Favorite
+  /favorites/{clientId}/{productId}:
+    delete:
+      description: Endpoit delete favorite
+      parameters:
+      - description: client id
+        in: path
+        name: clientId
+        required: true
+        type: integer
+      - description: product id
+        in: path
+        name: productId
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/genericresponse.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete Favorite
+      tags:
+      - Favorite
+  /login:
+    post:
+      description: Endpoit login
+      parameters:
+      - description: Payload
+        in: body
+        name: Payload
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LoginRequestDTO'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.LoginResponseDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/genericresponse.Error'
+      summary: Login
+      tags:
+      - Login
+  /products:
+    get:
+      description: Endpoit to list products
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ProductResponseDTO'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/genericresponse.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: list products
+      tags:
+      - Product
+  /products/{productID}:
+    get:
+      description: Endpoit to detail product
+      parameters:
+      - description: product id
+        in: path
+        name: productID
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ProductResponseDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/genericresponse.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/genericresponse.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: detail product
+      tags:
+      - Product
+produces:
+- application/json
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

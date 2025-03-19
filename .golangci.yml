@@ -1,0 +1,43 @@
+linters:
+  disable-all: true
+  enable:
+    - goconst
+    - gofmt
+    - goimports
+    - mnd
+    - gosimple
+    - govet
+    - unparam
+    - nilerr
+    - errcheck
+    - errorlint
+    - exhaustive
+    - ineffassign
+    - predeclared
+    - asciicheck
+    - lll
+    - wsl
+    - prealloc
+    - nestif    
+    - makezero
+    - gocognit
+    - varnamelen
+    - noctx
+    - copyloopvar
+    - gosec
+    - dupl
+    - gocritic
+    - unused
+    - bodyclose
+
+linters-settings:
+  varnamelen:
+    min-name-length: 2
+
+issues:
+  exclude-dirs:
+    - mocks
+  exclude-rules:
+    - path: '(.+)_test\.go'
+      linters:
+        - dupl

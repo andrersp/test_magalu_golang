@@ -1,0 +1,42 @@
+services:
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - favorite_volume:/var/lib/postgresql/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    networks:
+      - favorite_network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER}" ]
+      interval: 2s
+      timeout: 2s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: "400M"
+          cpus: '0.5'
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "8080:${API_PORT}"
+    networks:
+      - favorite_network
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  favorite_volume:
+networks:
+  favorite_network:

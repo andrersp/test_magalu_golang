@@ -1,0 +1,72 @@
+# Ignore editor and OS files
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Ignore build artifacts and binaries
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Ignore any test or debug files
+*.test
+*.out
+
+# Ignore documentation and generated files
+/doc/
+/site/
+*.html
+*.pdf
+
+# Ignore version control files and directories
+.git/
+.gitignore
+.hg/
+.hgignore
+.svn/
+
+# Ignore temporary files and directories
+.temp/
+.temp-*
+tmp/
+
+# Ignore any sensitive or private information
+secrets/
+config.yaml
+config.json
+
+# Ignore any logs or log files
+logs/
+*.log
+
+# Ignore any backup files
+*.bak
+*.backup
+*.old
+
+# Ignore node_modules for any frontend assets (if applicable)
+node_modules/
+
+# Ignore GitHub Actions files
+.github/
+
+# Helm
+helm/
+
+# Ignore ENV files
+.env.local
+.env.testing
+
+# Ignore makefiles
+Makefile
+mocks
+
+# Ignore vendor directory
+vendor/
+
+# Ignore coverage files
+coverage/
