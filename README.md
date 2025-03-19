@@ -1,3 +1,6 @@
+### Default Data
+Default email to use admin painel is: admin@admin.com
+
 ### Installation
 
 Instructions on how to install the project. This might include downloading from a package manager, cloning the repository, or other setup steps.
@@ -48,6 +51,4 @@ To add more environment variables, add them to the `.env`. The format is as foll
 VAR=value
 ```
 
-## License
 
-This project is licensed under the [License Name] License - see the [LICENSE.md](LICENSE.md) file for details.
