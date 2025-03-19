@@ -22,6 +22,7 @@ make swag
 Guidelines for contributing to the project. This might include information on how to run the project locally, testing and debugging, or how to build and release the project.
 
 ```bash
+air init
 make dev
 ```
 
