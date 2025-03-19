@@ -11,8 +11,7 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     ports:
       - "5432:5432"
-    networks:
-      - favorite_network
+
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U ${DB_USER}" ]
       interval: 2s
@@ -23,20 +22,5 @@ services:
         limits:
           memory: "400M"
           cpus: '0.5'
-  app:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    env_file:
-      - .env
-    ports:
-      - "8080:${API_PORT}"
-    networks:
-      - favorite_network
-    depends_on:
-      db:
-        condition: service_healthy
 volumes:
   favorite_volume:
-networks:
-  favorite_network:
